@@ -1,5 +1,6 @@
 const express = require("express");
 const http = require("http");
+import path from "path";
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -13,6 +14,14 @@ app.use(cors());
 
 // register the routes
 app.use('/api/auth', authRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
 
 const server = http.createServer(app);
 
