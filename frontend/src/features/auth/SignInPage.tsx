@@ -13,6 +13,8 @@ import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from '../../components/ForgotPassword';
 import { GoogleIcon, FacebookIcon } from '../../components/CustomIcons';
+import { useLoginMutation } from '../api/apiSlice';
+import TestAuth from './TestAuth';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -40,6 +42,27 @@ export default function SignInPage(props: { disableCustomTheme?: boolean }) {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const [login, { isLoading, error, data }] = useLoginMutation();
+
+  React.useEffect(() => {
+    const emailField = document.getElementById('email') as HTMLInputElement;
+    const passwordField = document.getElementById('password') as HTMLInputElement;
+    if (emailField && passwordField) {
+      emailField.value = 'test5@gmail.com';
+      passwordField.value = '123456';
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (error) {
+      console.error('Login error:', error);
+    }
+    if (data) {
+      console.log('Login successful:', data);
+      
+      localStorage.setItem('token', data?.user?.token || '');
+    }
+  }, [error, data]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,16 +72,16 @@ export default function SignInPage(props: { disableCustomTheme?: boolean }) {
     setOpen(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+
+    await login({ email, password }).unwrap();
   };
 
   const validateInputs = () => {
@@ -123,6 +146,7 @@ export default function SignInPage(props: { disableCustomTheme?: boolean }) {
             fullWidth
             variant="outlined"
             color={emailError ? 'error' : 'primary'}
+            
           />
         </FormControl>
         <FormControl>
@@ -193,6 +217,8 @@ export default function SignInPage(props: { disableCustomTheme?: boolean }) {
             Sign up
           </Link>
         </Typography>
+
+        <TestAuth />
       </Box>
     </Card>
   );
