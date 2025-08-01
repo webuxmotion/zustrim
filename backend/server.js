@@ -1,6 +1,6 @@
 const express = require("express");
 const http = require("http");
-import path from "path";
+const path = require('path');
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
