@@ -2,12 +2,15 @@ const express = require("express");
 const http = require("http");
 const path = require('path');
 const cors = require("cors");
+const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-require("dotenv").config();
+
 
 const authRoutes = require('./routes/authRoutes');
 
-const PORT = process.env.PORT || process.env.API_PORT || 5000;
+dotenv.config();
+
+const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(express.json());
 app.use(cors());
