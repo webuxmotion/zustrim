@@ -84,13 +84,28 @@ export default function AppAppBar() {
             }}
           >
             <NavLink to="/sign-in">
-              <Button color="primary" variant="text" size="small">
-                Sign in
-              </Button>
+              {({ isActive }) => (
+                <Button
+                  color="primary"
+                  variant={isActive ? 'contained' : 'text'}
+                  size="small"
+                >
+                  Sign in
+                </Button>
+              )}
             </NavLink>
-            <Button color="primary" variant="contained" size="small">
-              Sign up
-            </Button>
+
+            <NavLink to="/sign-up">
+              {({ isActive }) => (
+                <Button
+                  color="primary"
+                  variant={isActive ? 'contained' : 'text'}
+                  size="small"
+                >
+                  Sign up
+                </Button>
+              )}
+            </NavLink>
             <ColorModeIconDropdown />
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>

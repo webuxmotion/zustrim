@@ -1,9 +1,9 @@
 import React from 'react'
-import { useLazyTestAuthQuery } from '../api/apiSlice';
 import { Button } from '@mui/material';
+import { useLazyCheckAuthQuery } from '../api/apiSlice';
 
 function TestAuth() {
-    const [trigger, { data, isFetching, error }] = useLazyTestAuthQuery();
+    const [trigger, { data, isFetching, error }] = useLazyCheckAuthQuery();
 
     const handleClick = () => {
         trigger(); // this sends the GET request

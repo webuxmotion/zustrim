@@ -21,7 +21,7 @@ router.post('/register', validator.body(registerSchema), authControllers.postReg
 router.post('/login', validator.body(loginSchema), authControllers.postLogin);
 
 // test route to test auth middleware
-router.get('/test', authMiddleware, (req, res) => {
+router.get('/check', authMiddleware, (req, res) => {
     res.status(200).json({ message: "You are authenticated!", user: req.user });
 });
 

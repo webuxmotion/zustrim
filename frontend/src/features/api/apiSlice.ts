@@ -20,13 +20,20 @@ export const api = createApi({
                 body: credentials,
             }),
         }),
-        testAuth: builder.query<string, void>({   // 👈 Add this block
-            query: () => 'auth/test',
+        register: builder.mutation<RegisterResponse, RegisterRequest>({
+            query: (credentials) => ({
+                url: 'auth/register',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+        checkAuth: builder.query<{ success: boolean; user?: any }, void>({
+            query: () => 'auth/check',
         }),
     }),
 });
 
-export const { useLoginMutation, useLazyTestAuthQuery } = api;
+export const { useLoginMutation, useRegisterMutation, useLazyCheckAuthQuery, useCheckAuthQuery } = api;
 
 export type LoginRequest = {
     email: string;
@@ -34,6 +41,21 @@ export type LoginRequest = {
 };
 
 export type LoginResponse = {
+    user: {
+        id: string;
+        email: string;
+        name: string;
+        token: string;
+    };
+};
+
+export type RegisterRequest = {
+    username: string;
+    email: string;
+    password: string;
+};
+
+export type RegisterResponse = {
     user: {
         id: string;
         email: string;

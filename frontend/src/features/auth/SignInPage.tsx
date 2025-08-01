@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -6,37 +7,17 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import MuiCard from '@mui/material/Card';
-import { styled } from '@mui/material/styles';
 import ForgotPassword from '../../components/ForgotPassword';
 import { GoogleIcon, FacebookIcon } from '../../components/CustomIcons';
 import { useLoginMutation } from '../api/apiSlice';
 import TestAuth from './TestAuth';
-
-const Card = styled(MuiCard)(({ theme }) => ({
-  display: 'flex',
-  margin: 'auto',
-  marginTop: theme.spacing(20),
-  flexDirection: 'column',
-  alignSelf: 'center',
-  width: '100%',
-  padding: theme.spacing(4),
-  gap: theme.spacing(2),
-  [theme.breakpoints.up('sm')]: {
-    maxWidth: '450px',
-  },
-  boxShadow:
-    'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
-  ...theme.applyStyles('dark', {
-    boxShadow:
-      'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
-  }),
-}));
+import Card from './Card';
+import Link from '../../components/Link';
 
 export default function SignInPage(props: { disableCustomTheme?: boolean }) {
+  const navigate = useNavigate();
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
@@ -58,9 +39,9 @@ export default function SignInPage(props: { disableCustomTheme?: boolean }) {
       console.error('Login error:', error);
     }
     if (data) {
-      console.log('Login successful:', data);
-      
+
       localStorage.setItem('token', data?.user?.token || '');
+      navigate('/dashboard');
     }
   }, [error, data]);
 
@@ -146,7 +127,7 @@ export default function SignInPage(props: { disableCustomTheme?: boolean }) {
             fullWidth
             variant="outlined"
             color={emailError ? 'error' : 'primary'}
-            
+
           />
         </FormControl>
         <FormControl>
@@ -210,11 +191,11 @@ export default function SignInPage(props: { disableCustomTheme?: boolean }) {
         <Typography sx={{ textAlign: 'center' }}>
           Don&apos;t have an account?{' '}
           <Link
-            href="/material-ui/getting-started/templates/sign-in/"
+            to="/sign-up"
             variant="body2"
             sx={{ alignSelf: 'center' }}
           >
-            Sign up
+            Sign Up
           </Link>
         </Typography>
 
