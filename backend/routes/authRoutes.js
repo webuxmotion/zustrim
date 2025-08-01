@@ -1,6 +1,7 @@
 const express = require('express');
 const { authControllers } = require('../controllers/authControllers');
 const router = express.Router();
+const authMiddleware = require('../middleware/auth');
 
 const Joi = require('joi');
 const validator = require('express-joi-validation').createValidator({});
@@ -18,5 +19,10 @@ const loginSchema = Joi.object({
 
 router.post('/register', validator.body(registerSchema), authControllers.postRegister);
 router.post('/login', validator.body(loginSchema), authControllers.postLogin);
+
+// test route to test auth middleware
+router.get('/test', authMiddleware, (req, res) => {
+    res.status(200).json({ message: "You are authenticated!", user: req.user });
+});
 
 module.exports = router;
