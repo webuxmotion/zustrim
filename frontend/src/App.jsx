@@ -2,10 +2,12 @@ import React from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
+import MarketingPage from './features/marketing/MarketingPage';
 
 function App() {
   return (
     <div className="App">
+      <MarketingPage />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
