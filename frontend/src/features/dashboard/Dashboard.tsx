@@ -27,11 +27,6 @@ function DashboardPage() {
     }
   }, [isError, isSuccess, isLoading, navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // remove JWT token
-    navigate('/sign-in'); // redirect to sign-in or home
-  };
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -42,11 +37,6 @@ function DashboardPage() {
       <FriendsSidebar />
       <Messenger />
       <AppBar />
-
-      <h1>Dashboard for {data?.user?.email || 'user'}</h1>
-      <Button variant="contained" color="secondary" onClick={handleLogout}>
-        Logout
-      </Button>
     </Wrapper>
   }
 
