@@ -15,18 +15,20 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+
 // register the routes
 app.use('/api/auth', authRoutes);
 
 const server = http.createServer(app);
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-//   app.get("/*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-//   });
-// }
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
 
 mongoose.connect(process.env.MONGODB_URI).then(() => {
   console.log("Connected to MongoDB");
