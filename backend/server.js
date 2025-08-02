@@ -18,6 +18,8 @@ app.use(cors());
 // register the routes
 app.use('/api/auth', authRoutes);
 
+const server = http.createServer(app);
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
@@ -25,8 +27,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
 }
-
-const server = http.createServer(app);
 
 mongoose.connect(process.env.MONGODB_URI).then(() => {
   console.log("Connected to MongoDB");
