@@ -15,6 +15,7 @@ const app = express();
 app.use(express.json());
 
 const allowedOrigins = [
+  "http://localhost:5173",
   "https://zustrim.onrender.com",
   "https://www.zustrim.onrender.com",
 ];
