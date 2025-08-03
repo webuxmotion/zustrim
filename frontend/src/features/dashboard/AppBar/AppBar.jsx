@@ -9,9 +9,11 @@ const MainContainer = styled.div`
   top: 0;
   height: 48px;
   border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
-    width: calc(100% - (224px + 72px)); // Adjust width based on sidebar and messenger
-    display: flex;
-    align-items: center;
+width: calc(100% - (224px + 72px)); // Adjust width based on sidebar and messenger
+display: flex;
+align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
 `;
 
 function AppBar() {
@@ -23,6 +25,7 @@ function AppBar() {
 
     return (
         <MainContainer>
+            app bar
             <Button variant="contained" color="secondary" onClick={handleLogout}>
                 Logout
             </Button>
