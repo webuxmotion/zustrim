@@ -1,6 +1,7 @@
 import Avatar from '@/shared/components/Avatar'
 import { Button, Typography } from '@mui/material'
 import React from 'react'
+import OnlineIndicator from './OnlineIndicator'
 
 function FriendsListItem({ id, username, isOnline }) {
     return (
@@ -18,7 +19,7 @@ function FriendsListItem({ id, username, isOnline }) {
             }}
         >
             <Avatar username={username} />
-            <Typography 
+            <Typography
                 style={{
                     marginLeft: '7px',
                     fontWeight: 700,
@@ -29,6 +30,7 @@ function FriendsListItem({ id, username, isOnline }) {
             >
                 {username}
             </Typography>
+            {isOnline && <OnlineIndicator />}
         </Button>
     )
 }
