@@ -15,9 +15,12 @@ import { useLoginMutation } from '../api/apiSlice';
 import TestAuth from './TestAuth';
 import Card from './Card';
 import Link from '../../components/Link';
+import { setUserDetails } from '../user/userSlice';
+import { useDispatch } from 'react-redux';
 
 export default function SignInPage(props: { disableCustomTheme?: boolean }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
@@ -39,7 +42,7 @@ export default function SignInPage(props: { disableCustomTheme?: boolean }) {
       console.error('Login error:', error);
     }
     if (data) {
-
+      dispatch(setUserDetails(data?.user));
       localStorage.setItem('token', data?.user?.token || '');
       navigate('/dashboard');
     }
@@ -60,7 +63,6 @@ export default function SignInPage(props: { disableCustomTheme?: boolean }) {
 
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
-
 
     await login({ email, password }).unwrap();
   };

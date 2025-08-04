@@ -13,9 +13,12 @@ import Card from './Card';
 import { useRegisterMutation } from '../api/apiSlice';
 import Link from '../../components/Link';
 import { useNavigate } from 'react-router';
+import { setUserDetails } from '../user/userSlice';
+import { useDispatch } from 'react-redux';
 
 export default function SignUpPage(props: { disableCustomTheme?: boolean }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [emailError, setEmailError] = React.useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
     const [passwordError, setPasswordError] = React.useState(false);
@@ -41,7 +44,7 @@ export default function SignUpPage(props: { disableCustomTheme?: boolean }) {
             console.error('Login error:', error);
         }
         if (data) {
-
+            dispatch(setUserDetails(data?.user));
             localStorage.setItem('token', data?.user?.token || '');
             navigate('/dashboard');
         }

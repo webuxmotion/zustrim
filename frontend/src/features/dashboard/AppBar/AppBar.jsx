@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import { Button } from '@mui/material';
 import React from 'react'
-import { useNavigate } from 'react-router';
 import DropdownMenu from './DropdownMenu';
+import { useSelector } from 'react-redux';
 
 const MainContainer = styled.div`
   position: absolute;
@@ -18,11 +17,11 @@ const MainContainer = styled.div`
 `;
 
 function AppBar() {
-    
+    const user = useSelector((state) => state.user);
 
     return (
         <MainContainer>
-            app bar
+            {user.username}
             <DropdownMenu />
         </MainContainer>
     )
