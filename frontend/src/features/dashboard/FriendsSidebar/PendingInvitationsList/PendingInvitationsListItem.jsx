@@ -1,10 +1,9 @@
 import Avatar from '@/shared/components/Avatar';
 import { Box, Tooltip, Typography } from '@mui/material';
 import React from 'react'
+import InvitationDecisionButtons from './InvitationDecisionButtons';
 
-function PendingInvitationsListItem({ id, username, email,
-    onAccept, onReject
-}) {
+function PendingInvitationsListItem({ id, username, email, onAccept, onReject }) {
     const [buttonsDisabled, setButtonsDisabled] = React.useState(false);
 
     const handleAccept = () => {
@@ -39,6 +38,11 @@ function PendingInvitationsListItem({ id, username, email,
                         }}
                         variant="subtitle1"
                     >{username}</Typography>
+                    <InvitationDecisionButtons
+                        disabled={buttonsDisabled}
+                        acceptInvitationHandler={handleAccept}
+                        rejectInvitationHandler={handleReject}
+                    />
                 </Box>
             </div>
         </Tooltip>
