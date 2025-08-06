@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
 
 let socket = null;
+const SOCKET_URL = import.meta.env.MODE === "development" ? "http://localhost:5002" : "https://zustrim.onrender.com"
 
 export const connectSocket = (user) => {
   if (socket && socket.connected) {
@@ -15,10 +16,10 @@ export const connectSocket = (user) => {
   }
 
   const jwtToken = user.token;
-  
+
   if (!socket || !socket.connected) {
     console.log('🟢 Connecting socket...');
-    socket = io('http://localhost:5002', {
+    socket = io(SOCKET_URL, {
       auth: {
         token: jwtToken
       }
