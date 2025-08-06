@@ -1,10 +1,10 @@
 const express = require('express');
 const { authControllers } = require('../controllers/authControllers');
 const router = express.Router();
-const authMiddleware = require('../middleware/auth');
-
 const Joi = require('joi');
 const validator = require('express-joi-validation').createValidator({});
+const authMiddleware = require('../middleware/auth');
+
 
 const registerSchema = Joi.object({
     username: Joi.string().min(2).max(12).required(),

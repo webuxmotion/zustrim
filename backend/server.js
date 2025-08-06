@@ -9,6 +9,7 @@ dotenv.config();
 const socketServer = require('./socketServer');
 
 const authRoutes = require('./routes/authRoutes');
+const friendInvitationRoutes = require('./routes/friendInvitationRoutes');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -37,6 +38,7 @@ socketServer.registerSocketServer(server);
 
 // register the routes
 app.use('/api/auth', authRoutes);
+app.use('api/friend-invitation', friendInvitationRoutes);
 
 
 if (process.env.NODE_ENV === "production") {
