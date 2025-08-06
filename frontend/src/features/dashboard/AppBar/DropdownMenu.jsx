@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { MoreVert } from '@mui/icons-material';
+import { disconnectSocket } from '@/socket/socket';
 
 export default function DropdownMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -19,10 +20,11 @@ export default function DropdownMenu() {
   };
 
   const handleLogout = () => {
-      handleClose();
-        localStorage.removeItem('token'); // remove JWT token
-        navigate('/sign-in'); // redirect to sign-in or home
-    };
+    handleClose();
+    disconnectSocket();
+    localStorage.removeItem('token'); // remove JWT token
+    navigate('/sign-in'); // redirect to sign-in or home
+  };
 
   return (
     <div>
@@ -35,7 +37,7 @@ export default function DropdownMenu() {
       >
         <MoreVert />
       </IconButton>
-      
+
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

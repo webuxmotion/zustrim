@@ -11,7 +11,7 @@ import { logout } from '@/shared/utils/auth';
 import { setUserDetails } from '../user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
-import { connectSocket } from '@/socket/socket';
+import { connectSocket, disconnectSocket } from '@/socket/socket';
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,6 +26,7 @@ function DashboardPage() {
   useEffect(() => {
     if (!user) {
       logout();
+      disconnectSocket();
     } else {
       checkAuth();
     }
@@ -38,10 +39,10 @@ function DashboardPage() {
   }, [isError, isSuccess, isLoading, navigate]);
 
   useEffect(() => {
-    if (data) {
-      connectSocket();
+    if (isSuccess && user) {
+      connectSocket(user);
     }
-  }, [data]);
+  }, [isSuccess, user]);
 
   if (isLoading) {
     return <div>Loading...</div>;
