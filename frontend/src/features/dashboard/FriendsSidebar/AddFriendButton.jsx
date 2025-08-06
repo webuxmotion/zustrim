@@ -13,7 +13,7 @@ const additionalStyles = {
 
 function AddFriendButton() {
     const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-    const [sendInvitation, { isLoading, isError, isSuccess, error }] = useSendFriendInvitationMutation();
+    const [sendInvitation, { isLoading, isError, isSuccess, error, data }] = useSendFriendInvitationMutation();
 
     const handleOpenAddFriendDialog = () => {
         // Logic to open the Add Friend dialog
@@ -28,9 +28,10 @@ function AddFriendButton() {
     const handleSendInvitation = async (email) => {
         try {
             await sendInvitation({ email }).unwrap();
-            handleCloseDialog();
         } catch (err) {
             console.error('Error sending invitation:', err);
+        } finally {
+            handleCloseDialog();
         }
     };
 

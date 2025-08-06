@@ -38,7 +38,7 @@ socketServer.registerSocketServer(server);
 
 // register the routes
 app.use('/api/auth', authRoutes);
-app.use('api/friend-invitation', friendInvitationRoutes);
+app.use('/api/friend-invitation', friendInvitationRoutes);
 
 
 if (process.env.NODE_ENV === "production") {

@@ -1,4 +1,4 @@
-const User = require('../models/user'); // Assuming you have a User model
+const User = require('../../models/user'); // Assuming you have a User model
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -18,11 +18,13 @@ const postLogin = async (req, res) => {
 
         const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.status(200).json({ user: {
-            email: user.email,
-            username: user.username,
-            token
-        } });
+        res.status(200).json({
+            user: {
+                email: user.email,
+                username: user.username,
+                token
+            }
+        });
 
     } catch (error) {
         console.error('Error during login:', error);
