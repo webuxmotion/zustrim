@@ -13,7 +13,7 @@ function AddFriendDialog({
   const [isFormValid, setIsFormValid] = React.useState(false);
 
   const handleSendInvitation = () => {
-
+    sendFriendInvitation(mail);
   }
 
   const handleCloseDialog = () => {

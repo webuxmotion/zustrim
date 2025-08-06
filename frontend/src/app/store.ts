@@ -1,14 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { api } from '../features/api/apiSlice';
 import userReducer from '@/features/user/userSlice';
+import friendsReducer from '@/features/dashboard/FriendsSidebar/friendsSlicer';
+import { baseApi } from '@/api/baseApi';
 
 export const store = configureStore({
   reducer: {
-    [api.reducerPath]: api.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
     user: userReducer,
+    friends: friendsReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+    getDefaultMiddleware().concat(baseApi.middleware),
 });
 
 store.subscribe(() => {

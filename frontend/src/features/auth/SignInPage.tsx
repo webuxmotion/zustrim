@@ -11,12 +11,12 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import ForgotPassword from '../../components/ForgotPassword';
 import { GoogleIcon, FacebookIcon } from '../../components/CustomIcons';
-import { useLoginMutation } from '../api/apiSlice';
 import TestAuth from './TestAuth';
 import Card from './Card';
 import Link from '../../components/Link';
 import { setUserDetails } from '../user/userSlice';
 import { useDispatch } from 'react-redux';
+import { useLoginMutation } from '@/api/authApi';
 
 export default function SignInPage(props: { disableCustomTheme?: boolean }) {
   const navigate = useNavigate();

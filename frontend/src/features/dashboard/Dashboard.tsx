@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
-import { useLazyCheckAuthQuery } from '../api/apiSlice';
 import styled from '@emotion/styled';
 import SideBar from './SideBar/SideBar';
 import FriendsSidebar from './FriendsSidebar/FriendsSidebar';
@@ -12,6 +11,7 @@ import { setUserDetails } from '../user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 import { connectSocket, disconnectSocket } from '@/socket/socket';
+import { useLazyCheckAuthQuery } from '@/api/authApi';
 
 const Wrapper = styled.div`
   display: flex;

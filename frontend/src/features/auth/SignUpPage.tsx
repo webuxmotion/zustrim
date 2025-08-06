@@ -10,11 +10,11 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { GoogleIcon, FacebookIcon } from '../../components/CustomIcons';
 import Card from './Card';
-import { useRegisterMutation } from '../api/apiSlice';
 import Link from '../../components/Link';
 import { useNavigate } from 'react-router';
 import { setUserDetails } from '../user/userSlice';
 import { useDispatch } from 'react-redux';
+import { useRegisterMutation } from '@/api/authApi';
 
 export default function SignUpPage(props: { disableCustomTheme?: boolean }) {
     const navigate = useNavigate();

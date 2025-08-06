@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@mui/material';
-import { useLazyCheckAuthQuery } from '../api/apiSlice';
+import { useLazyCheckAuthQuery } from '@/api/authApi';
 
 function TestAuth() {
     const [trigger, { data, isFetching, error }] = useLazyCheckAuthQuery();

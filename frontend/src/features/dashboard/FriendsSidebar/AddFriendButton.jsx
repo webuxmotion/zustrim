@@ -1,6 +1,7 @@
 import React from 'react'
 import CustomPrimaryButton from '../../../shared/components/CustomPrimaryButton';
 import AddFriendDialog from './AddFriendDialog';
+import { useSendFriendInvitationMutation } from '@/api/friendsApi';
 
 const additionalStyles = {
     marginTop: '10px',
@@ -12,6 +13,8 @@ const additionalStyles = {
 
 function AddFriendButton() {
     const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+    const [sendInvitation, { isLoading, isError, isSuccess, error }] = useSendFriendInvitationMutation();
+
     const handleOpenAddFriendDialog = () => {
         // Logic to open the Add Friend dialog
         console.log("Open Add Friend Dialog");
@@ -22,9 +25,13 @@ function AddFriendButton() {
         setIsDialogOpen(false);
     };
 
-    const handleSendInvitation = (email) => {
-        console.log("Sending friend invitation to:", email);
-        // Logic to send friend invitation
+    const handleSendInvitation = async (email) => {
+        try {
+            await sendInvitation({ email }).unwrap();
+            handleCloseDialog();
+        } catch (err) {
+            console.error('Error sending invitation:', err);
+        }
     };
 
     return (
