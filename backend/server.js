@@ -4,11 +4,11 @@ const path = require('path');
 const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+dotenv.config();
 
+const socketServer = require('./socketServer');
 
 const authRoutes = require('./routes/authRoutes');
-
-dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -33,6 +33,7 @@ app.use(cors({
 
 
 const server = http.createServer(app);
+socketServer.registerSocketServer(server);
 
 // register the routes
 app.use('/api/auth', authRoutes);
