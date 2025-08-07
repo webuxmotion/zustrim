@@ -1,3 +1,4 @@
+const FriendInvitation = require('../../models/friendInvitation');
 const User = require('../../models/user');
 
 const postInviteFriend = async (req, res) => {
@@ -21,6 +22,25 @@ const postInviteFriend = async (req, res) => {
     if (!targetUser) {
         return res.status(404).send({
             message: `Friend with email: ${targetEmail} has not been found.`
+        });
+    }
+
+    const invitationAlreadyReceived = await FriendInvitation.findOne({
+        senderId: userId,
+        receiverId: targetUser._id
+    });
+
+    if (invitationAlreadyReceived) {
+        return res.status(409).send({
+            message: 'Invitation has been already sent'
+        });
+    }
+
+    const usersAlreadyFriends = targetUser.friends.find(friendId => friendId.toString() === userId.toString());
+
+    if (usersAlreadyFriends) {
+        return res.status(409).send({
+            message: 'Friend already added. Please check friends list'
         });
     }
 
