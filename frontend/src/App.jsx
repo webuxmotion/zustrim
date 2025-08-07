@@ -8,6 +8,7 @@ import MainLayout from './layouts/MainLayout';
 import SignUpPage from './features/auth/SignUpPage';
 import DashboardLayout from './layouts/DashboardLayout';
 import DashboardPage from './features/dashboard/Dashboard';
+import RenderLayout from './layouts/RenderLayout';
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
       </Route>
 
       <Route path="/test-app" element={<CounterWrapper />} />
+
+      <Route element={<RenderLayout />}>
+        <Route path="/render-index" element={<div>Hello</div>} />
+      </Route>
     </Routes>
   );
 }
