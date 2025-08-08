@@ -1,5 +1,5 @@
 import { store } from '@/app/store';
-import { setFriends, setPendingFriendsInvitations } from '@/features/dashboard/FriendsSidebar/friendsSlicer';
+import { setFriends, setOnlineUsers, setPendingFriendsInvitations } from '@/features/dashboard/FriendsSidebar/friendsSlicer';
 import io from 'socket.io-client';
 
 let socket = null;
@@ -40,7 +40,14 @@ export const connectSocket = (user) => {
       const { friends } = data;
 
       store.dispatch(setFriends(friends));
-    })
+    });
+
+    socket.on('online-users', (data) => {
+      const { onlineUsers } = data;
+
+      store.dispatch(setOnlineUsers(onlineUsers));
+    });
+
   } else {
     console.log('⚠️ Socket already connected');
   }

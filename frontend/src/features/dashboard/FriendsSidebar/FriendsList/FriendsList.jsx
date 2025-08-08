@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 import styled from '@emotion/styled';
 import FriendsListItem from './FriendsListItem';
 import { useSelector } from 'react-redux';
+import { LoaderIcon } from 'react-hot-toast';
 
 const MainContainer = styled.div`
   flex-grow: 1;
@@ -9,11 +10,26 @@ const MainContainer = styled.div`
 `;
 
 function FriendsList() {
-    const friends = useSelector((state) => state.friends);
+    const friendsState = useSelector((state) => state.friends);
+
+    if (!friendsState) {
+        return (
+            <MainContainer>
+                <LoaderIcon />
+            </MainContainer>
+        );
+    }
+
+    const friendsToShow = friendsState.friends.map((friend) => ({
+        ...friend,
+        isOnline: friendsState.onlineUsers.some(
+            (user) => user.userId === friend.id
+        ),
+    }));
 
     return (
         <MainContainer>
-            {friends?.friends.map((friend) => (
+            {friendsToShow.map((friend) => (
                 <FriendsListItem
                     key={friend.id}
                     id={friend.id}
@@ -22,7 +38,7 @@ function FriendsList() {
                 />
             ))}
         </MainContainer>
-    )
+    );
 }
 
 export default FriendsList;
