@@ -6,6 +6,7 @@ import App from './App.jsx'
 import { Provider } from 'react-redux'
 import { store } from './app/store';
 import { StyledEngineProvider } from '@mui/material';
+import { Toaster } from "react-hot-toast";
 
 
 createRoot(document.getElementById('root')).render(
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
       <StyledEngineProvider injectFirst>
         <Provider store={store}>
           <App />
+          <Toaster />
         </Provider>
       </StyledEngineProvider>
     </BrowserRouter>

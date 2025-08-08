@@ -6,8 +6,6 @@ const postInviteFriend = async (req, res) => {
 
     const { userId, email } = req.user;
 
-    console.log(targetEmail, email);
-
     // check if friend that we would like to invite is not user
     if (email.toLowerCase() === targetEmail.toLowerCase()) {
         return res.status(409).send({
@@ -44,7 +42,17 @@ const postInviteFriend = async (req, res) => {
         });
     }
 
-    return res.send("Controller is working!")
+    const newInvitation = await FriendInvitation.create({
+        senderId: userId,
+        receiverId: targetUser._id
+    });
+
+    return res.status(201).send({
+        message: 'Invitation has been sent',
+        targetUser: {
+            email: targetUser?.email
+        },
+    });
 }
 
 module.exports = postInviteFriend;

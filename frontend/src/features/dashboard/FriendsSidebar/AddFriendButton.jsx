@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CustomPrimaryButton from '../../../shared/components/CustomPrimaryButton';
 import AddFriendDialog from './AddFriendDialog';
 import { useSendFriendInvitationMutation } from '@/api/friendsApi';
+import toast from 'react-hot-toast';
 
 const additionalStyles = {
     marginTop: '10px',
@@ -29,11 +30,18 @@ function AddFriendButton() {
         try {
             await sendInvitation({ email }).unwrap();
         } catch (err) {
+            toast.error(err?.data?.message);
             console.error('Error sending invitation:', err);
         } finally {
             handleCloseDialog();
         }
     };
+
+    useEffect(() => {
+        if (data) {
+            toast.success(data?.message);
+        }
+    }, [data]);
 
     return (
         <>

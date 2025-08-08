@@ -7,7 +7,7 @@ import React, { useEffect } from 'react'
 function AddFriendDialog({
   isDialogOpen,
   closeDialogHandler,
-  sendFriendInvitation = () => { },
+  sendFriendInvitation,
 }) {
   const [mail, setMail] = React.useState('');
   const [isFormValid, setIsFormValid] = React.useState(false);
@@ -24,6 +24,12 @@ function AddFriendDialog({
   useEffect(() => {
     setIsFormValid(validateMail(mail));
   }, [mail, setIsFormValid]);
+
+  useEffect(() => {
+    if (!isDialogOpen) {
+      setMail('');
+    }
+  }, [isDialogOpen]);
 
   return (
     <div>
