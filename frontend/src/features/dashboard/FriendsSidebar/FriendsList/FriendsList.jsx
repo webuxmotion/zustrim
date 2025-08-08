@@ -1,24 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled';
 import FriendsListItem from './FriendsListItem';
-
-const DUMMY_FRIENDS = [
-    {
-        id: 1,
-        username: 'Mark',
-        isOnline: true,
-    },
-    {
-        id: 2,
-        username: 'John',
-        isOnline: false,
-    },
-    {
-        id: 3,
-        username: 'Jane',
-        isOnline: true,
-    },
-];
+import { useSelector } from 'react-redux';
 
 const MainContainer = styled.div`
   flex-grow: 1;
@@ -26,12 +9,13 @@ const MainContainer = styled.div`
 `;
 
 function FriendsList() {
+    const friends = useSelector((state) => state.friends);
 
     return (
         <MainContainer>
-            {DUMMY_FRIENDS.map((friend) => (
-                <FriendsListItem 
-                    key={friend.id} 
+            {friends?.friends.map((friend) => (
+                <FriendsListItem
+                    key={friend.id}
                     id={friend.id}
                     username={friend.username}
                     isOnline={friend.isOnline}

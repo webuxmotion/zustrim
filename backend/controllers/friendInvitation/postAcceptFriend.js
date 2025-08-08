@@ -1,6 +1,6 @@
 const FriendInvitation = require("../../models/friendInvitation");
 const User = require("../../models/user");
-const { updateFriendsPendingInvitations } = require("../../socketHandlers/update/friends");
+const { updateFriendsPendingInvitations, updateFriends } = require("../../socketHandlers/update/friends");
 
 const postAcceptFriend = async (req, res) => {
     try {
@@ -28,7 +28,10 @@ const postAcceptFriend = async (req, res) => {
 
         await invitation.deleteOne();
 
-        await updateFriendsPendingInvitations(userId);
+        await updateFriendsPendingInvitations(receiverId.toString());
+
+        await updateFriends(senderId.toString());
+        await updateFriends(receiverId.toString());
 
         return res.status(200).send({
             message: 'Invitation accepted',

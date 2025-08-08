@@ -17,7 +17,7 @@ function PendingInvitationsList() {
     const [invitation, setInvitations] = useState([]);
 
     useEffect(() => {
-        if (friends.pendingFriendsInvitations) {
+        if (friends?.pendingFriendsInvitations) {
             setInvitations(friends.pendingFriendsInvitations);
         }
     }, [friends]);
