@@ -21,7 +21,7 @@ function AppBar() {
 
     return (
         <MainContainer>
-            {user.username}
+            {`${user.username} ${user._id}`}
             <DropdownMenu />
         </MainContainer>
     )

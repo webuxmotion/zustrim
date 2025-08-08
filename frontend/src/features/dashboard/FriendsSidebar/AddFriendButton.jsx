@@ -17,8 +17,6 @@ function AddFriendButton() {
     const [sendInvitation, { isLoading, isError, isSuccess, error, data }] = useSendFriendInvitationMutation();
 
     const handleOpenAddFriendDialog = () => {
-        // Logic to open the Add Friend dialog
-        console.log("Open Add Friend Dialog");
         setIsDialogOpen(true);
     };
 

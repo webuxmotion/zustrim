@@ -1,14 +1,16 @@
 import styled from '@emotion/styled';
-import React from 'react'
+import React, { useEffect } from 'react'
 import AddFriendButton from './AddFriendButton';
 import FriendsTitle from './FriendsTitle';
 import PendingInvitationsList from './PendingInvitationsList/PendingInvitationsList';
 import FriendsList from './FriendsList/FriendsList';
+import { RootState } from '@/app/store';
+import { useSelector } from 'react-redux';
 
 const MainContainer = styled.div`
-  background-color: ${({ theme }) => theme.palette.grey[700]};
-  color: ${({ theme }) => theme.palette.grey[300]};
-  box-shadow: ${({ theme }) => theme.shadows[1]};
+  background-color: ${({ theme }) => (theme as any).colors?.grey?.[700] ?? '#333'};
+  color: ${({ theme }) => (theme as any).colors?.grey?.[300] ?? '#ccc'};
+  box-shadow: ${({ theme }) => (theme as any).shadows?.[1] ?? '0px 1px 4px rgba(0,0,0,0.2)'};
   display: flex;
   width: 224px;
   height: 100%;
@@ -18,6 +20,14 @@ const MainContainer = styled.div`
 `;
 
 function FriendsSidebar() {
+    const friends = useSelector((state: RootState) => state.friends);
+
+    useEffect(() => {
+      if (friends.pendingFriendsInvitations) {
+        console.log(friends.pendingFriendsInvitations);
+      }
+    }, [friends]);
+
     return (
         <MainContainer>
           <AddFriendButton />

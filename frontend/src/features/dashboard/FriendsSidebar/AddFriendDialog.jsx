@@ -9,7 +9,7 @@ function AddFriendDialog({
   closeDialogHandler,
   sendFriendInvitation,
 }) {
-  const [mail, setMail] = React.useState('');
+  const [mail, setMail] = React.useState('test50@gmail.com');
   const [isFormValid, setIsFormValid] = React.useState(false);
 
   const handleSendInvitation = () => {
@@ -27,7 +27,7 @@ function AddFriendDialog({
 
   useEffect(() => {
     if (!isDialogOpen) {
-      setMail('');
+      //setMail('');
     }
   }, [isDialogOpen]);
 

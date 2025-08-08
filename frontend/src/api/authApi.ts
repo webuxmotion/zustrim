@@ -29,9 +29,9 @@ export type LoginRequest = {
 
 export type LoginResponse = {
     user: {
-        id: string;
+        _id: string;
         email: string;
-        name: string;
+        username: string;
         token: string;
     };
 };
@@ -44,9 +44,9 @@ export type RegisterRequest = {
 
 export type RegisterResponse = {
     user: {
-        id: string;
+        _id: string;
         email: string;
-        name: string;
+        username: string;
         token: string;
     };
 };

@@ -1,3 +1,5 @@
+import { store } from '@/app/store';
+import { setPendingFriendsInvitations } from '@/features/dashboard/FriendsSidebar/friendsSlicer';
 import io from 'socket.io-client';
 
 let socket = null;
@@ -18,7 +20,6 @@ export const connectSocket = (user) => {
   const jwtToken = user.token;
 
   if (!socket || !socket.connected) {
-    console.log('🟢 Connecting socket...');
     socket = io(SOCKET_URL, {
       auth: {
         token: jwtToken
@@ -26,8 +27,13 @@ export const connectSocket = (user) => {
     });
 
     socket.on('connect', () => {
-      console.log('✅ connected with socket');
-      console.log(socket.id);
+      console.log('✅ connected. Socket id:', socket.id);
+    });
+
+    socket.on('friends-invitations', (data) => {
+      const { pendingInvitations } = data;
+
+      store.dispatch(setPendingFriendsInvitations(pendingInvitations));
     });
   } else {
     console.log('⚠️ Socket already connected');

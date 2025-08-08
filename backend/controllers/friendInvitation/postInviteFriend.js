@@ -1,5 +1,6 @@
 const FriendInvitation = require('../../models/friendInvitation');
 const User = require('../../models/user');
+const { updateFriendsPendingInvitations } = require('../../socketHandlers/update/friends');
 
 const postInviteFriend = async (req, res) => {
     const { email: targetEmail } = req.body;
@@ -46,6 +47,8 @@ const postInviteFriend = async (req, res) => {
         senderId: userId,
         receiverId: targetUser._id
     });
+
+    await updateFriendsPendingInvitations(targetUser._id.toString());
 
     return res.status(201).send({
         message: 'Invitation has been sent',

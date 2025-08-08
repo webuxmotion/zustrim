@@ -28,7 +28,7 @@ const postRegister = async (req, res) => {
         // generate a JWT token
         const token = jwt.sign({ userId: newUser._id, email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.status(201).json({ message: "User registered successfully", user: { username, email, token } });
+        res.status(201).json({ message: "User registered successfully", user: { _id: newUser._id, username, email, token } });
     } catch (error) {
         console.error("Error in postRegister:", error);
         res.status(500).json({ message: "Internal Server Error" });
