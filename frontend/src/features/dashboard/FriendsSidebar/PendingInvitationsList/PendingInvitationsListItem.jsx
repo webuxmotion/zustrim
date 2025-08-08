@@ -3,21 +3,30 @@ import { Box, Tooltip, Typography } from '@mui/material';
 import React from 'react'
 import InvitationDecisionButtons from './InvitationDecisionButtons';
 import { useAcceptFriendInvitationMutation, useRejectFriendInvitationMutation } from '@/api/friendsApi';
+import toast from 'react-hot-toast';
 
 function PendingInvitationsListItem({ id, username, email }) {
     const [buttonsDisabled, setButtonsDisabled] = React.useState(false);
-    const [acceptFrinedInvitation, { data: acceptData }] = useAcceptFriendInvitationMutation();
-    const [rejectFrinedInvitation, { data: rejectData }] = useRejectFriendInvitationMutation();
-    
+    const [acceptFrinedInvitation] = useAcceptFriendInvitationMutation();
+    const [rejectFrinedInvitation] = useRejectFriendInvitationMutation();
 
-    const handleAccept = () => {
+
+    const handleAccept = async () => {
         setButtonsDisabled(true);
-        acceptFrinedInvitation({ id });
+        const accept = await acceptFrinedInvitation({ id });
+
+        if (accept?.data?.message) {
+            toast.success(accept?.data?.message);
+        }
     };
 
-    const handleReject = () => {
+    const handleReject = async () => {
         setButtonsDisabled(true);
-        rejectFrinedInvitation({ id });
+        const reject = await rejectFrinedInvitation({ id });
+
+        if (reject?.data?.message) {
+            toast.success(reject?.data?.message);
+        }
     };
 
     return (
