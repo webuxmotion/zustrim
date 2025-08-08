@@ -4,8 +4,7 @@ import AddFriendButton from './AddFriendButton';
 import FriendsTitle from './FriendsTitle';
 import PendingInvitationsList from './PendingInvitationsList/PendingInvitationsList';
 import FriendsList from './FriendsList/FriendsList';
-import { RootState } from '@/app/store';
-import { useSelector } from 'react-redux';
+
 
 const MainContainer = styled.div`
   background-color: ${({ theme }) => (theme as any).colors?.grey?.[700] ?? '#333'};
@@ -20,13 +19,7 @@ const MainContainer = styled.div`
 `;
 
 function FriendsSidebar() {
-    const friends = useSelector((state: RootState) => state.friends);
-
-    useEffect(() => {
-      if (friends.pendingFriendsInvitations) {
-        console.log(friends.pendingFriendsInvitations);
-      }
-    }, [friends]);
+    
 
     return (
         <MainContainer>
