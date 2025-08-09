@@ -6,11 +6,11 @@ import FriendsSidebar from './FriendsSidebar/FriendsSidebar';
 import Messenger from './Messenger/Messenger';
 import AppBar from './AppBar/AppBar';
 import { logout } from '@/shared/utils/auth';
-import { setUserDetails } from '../user/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 import { connectSocket, disconnectSocket } from '@/socket/socket';
 import { useLazyCheckAuthQuery } from '@/api/authApi';
+import Room from '../room/Room';
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 
 function DashboardPage() {
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user);
+  const { user, room } = useSelector((state: RootState) => state);
   const [checkAuth, { data, isLoading, isError, isSuccess }] = useLazyCheckAuthQuery();
 
   useEffect(() => {
@@ -53,6 +53,7 @@ function DashboardPage() {
       <FriendsSidebar />
       <Messenger />
       <AppBar />
+      {room?.isUserInRoom && <Room />}
     </Wrapper>
   }
 
