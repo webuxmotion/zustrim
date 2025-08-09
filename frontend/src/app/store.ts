@@ -12,7 +12,16 @@ export const store = configureStore({
     room: roomReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(baseApi.middleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [
+          'room/setLocalStream',
+        ],
+        ignoredPaths: [
+          'room.localStream'
+        ],
+      },
+    }).concat(baseApi.middleware),
 });
 
 store.subscribe(() => {

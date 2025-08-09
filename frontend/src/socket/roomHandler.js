@@ -1,11 +1,15 @@
 import { store } from '@/app/store';
 import { setActiveRooms, setOpenRoom, setRoomDetails } from '@/features/room/roomSlice';
 import * as socket from './socket';
+import { getLocalStreamPreview } from './webRTCHandler';
 
 export const createNewRoom = () => {
-    store.dispatch(setOpenRoom({ isUserRoomCreator: true, isUserInRoom: true }));
+    const successCallbackFunc = () => {
+        store.dispatch(setOpenRoom({ isUserRoomCreator: true, isUserInRoom: true }));
+        socket.createNewRoom();
+    }
 
-    socket.createNewRoom();
+    getLocalStreamPreview(false, successCallbackFunc);
 }
 
 export const newRoomCreated = (data) => {
@@ -32,10 +36,13 @@ export const updateActiveRooms = (data) => {
 }
 
 export const joinRoom = (roomId) => {
-    store.dispatch(setRoomDetails({ roomId }));
-    store.dispatch(setOpenRoom({ isUserRoomCreator: false, isUserInRoom: true }));
+    const successCallbackFunc = () => {
+        store.dispatch(setRoomDetails({ roomId }));
+        store.dispatch(setOpenRoom({ isUserRoomCreator: false, isUserInRoom: true }));
+        socket.joinRoom({ roomId });
+    }
 
-    socket.joinRoom({ roomId });
+    getLocalStreamPreview(false, successCallbackFunc);
 }
 
 export const leaveRoom = () => {
