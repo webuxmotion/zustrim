@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import Button from '@mui/material/Button';
 import styled from '@emotion/styled';
 import SideBar from './SideBar/SideBar';
 import FriendsSidebar from './FriendsSidebar/FriendsSidebar';

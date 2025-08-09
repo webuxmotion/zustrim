@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '@/features/user/userSlice';
 import friendsReducer from '@/features/dashboard/FriendsSidebar/friendsSlicer';
+import roomReducer from '@/features/room/roomSlice';
 import { baseApi } from '@/api/baseApi';
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     user: userReducer,
     friends: friendsReducer,
+    room: roomReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware),
