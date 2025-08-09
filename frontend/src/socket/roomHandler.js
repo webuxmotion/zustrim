@@ -1,5 +1,5 @@
 import { store } from '@/app/store';
-import { setOpenRoom, setRoomDetails } from '@/features/room/roomSlice';
+import { setActiveRooms, setOpenRoom, setRoomDetails } from '@/features/room/roomSlice';
 import * as socket from './socket';
 
 export const createNewRoom = () => {
@@ -14,7 +14,15 @@ export const newRoomCreated = (data) => {
     store.dispatch(setRoomDetails(roomDetails));
 }
 
+export const updateActiveRooms = (data) => {
+    const { activeRooms } = data;
+
+    store.dispatch(setActiveRooms(activeRooms));
+}
+
+
 export default {
     createNewRoom,
-    newRoomCreated
+    newRoomCreated,
+    updateActiveRooms
 }

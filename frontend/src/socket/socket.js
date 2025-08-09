@@ -3,8 +3,11 @@ import { setFriends, setOnlineUsers, setPendingFriendsInvitations } from '@/feat
 import io from 'socket.io-client';
 import roomHandler from './roomHandler';
 
-let socket = null;
-const SOCKET_URL = import.meta.env.MODE === "development" ? "http://localhost:5002" : "https://zustrim.onrender.com"
+
+const SOCKET_URL = import.meta.env.MODE === "development" ? "http://localhost:5002" : "https://zustrim.onrender.com";
+
+// Reuse socket between hot reloads
+let socket = window.__SOCKET__ || null;
 
 export const connectSocket = (user) => {
   if (socket && socket.connected) {
@@ -26,6 +29,8 @@ export const connectSocket = (user) => {
         token: jwtToken
       }
     });
+
+    window.__SOCKET__ = socket;
 
     socket.on('connect', () => {
       console.log('✅ connected. Socket id:', socket.id);
@@ -53,6 +58,10 @@ export const connectSocket = (user) => {
       roomHandler.newRoomCreated(data);
     });
 
+    socket.on('active-rooms', (data) => {
+      console.log(data);
+      roomHandler.updateActiveRooms(data);
+    });
   } else {
     console.log('⚠️ Socket already connected');
   }
@@ -63,6 +72,7 @@ export const disconnectSocket = () => {
     console.log('🔌 Disconnecting socket...');
     socket.disconnect();
     socket = null;
+    window.__SOCKET__ = null;
   }
 };
 
