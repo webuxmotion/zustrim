@@ -59,7 +59,6 @@ export const connectSocket = (user) => {
     });
 
     socket.on('active-rooms', (data) => {
-      console.log(data);
       roomHandler.updateActiveRooms(data);
     });
   } else {
@@ -80,4 +79,12 @@ export const getSocket = () => socket;
 
 export const createNewRoom = () => {
   socket.emit('room-create');
+}
+
+export const joinRoom = (data) => {
+  socket.emit('room-join', data);
+}
+
+export const leaveRoom = (data) => {
+  socket.emit('room-leave', data);
 }

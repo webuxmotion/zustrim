@@ -16,13 +16,41 @@ export const newRoomCreated = (data) => {
 
 export const updateActiveRooms = (data) => {
     const { activeRooms } = data;
+    const friends = store.getState().friends.friends;
+    const rooms = [];
 
-    store.dispatch(setActiveRooms(activeRooms));
+    activeRooms.forEach((room) => {
+        friends.forEach((friend) => {
+            if (friend.id === room.roomCreator.userId) {
+                rooms.push({ ...room, creatorUsername: friend.username })
+            }
+        })
+    });
+
+    store.dispatch(setActiveRooms(rooms));
+}
+
+export const joinRoom = (roomId) => {
+    store.dispatch(setRoomDetails({ roomId }));
+    store.dispatch(setOpenRoom({ isUserRoomCreator: false, isUserInRoom: true }));
+
+    socket.joinRoom({ roomId });
+}
+
+export const leaveRoom = () => {
+    const room = store.getState().room;
+    const roomId = room.roomDetails.roomId;
+
+    socket.leaveRoom({ roomId });
+    store.dispatch(setRoomDetails(null));
+    store.dispatch(setOpenRoom({ isUserRoomCreator: false, isUserInRoom: false }));
 }
 
 
 export default {
     createNewRoom,
     newRoomCreated,
-    updateActiveRooms
+    updateActiveRooms,
+    joinRoom,
+    leaveRoom,
 }

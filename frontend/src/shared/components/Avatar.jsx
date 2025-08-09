@@ -12,7 +12,6 @@ const AvatarPreview = styled.div`
     justify-content: center;
     font-size: 20px;
     font-weight: 700;
-    margin-left: 5px;
     color: white;
 `;
 

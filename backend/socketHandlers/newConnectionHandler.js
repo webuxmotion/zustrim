@@ -2,7 +2,7 @@ const serverStore = require('../serverStore');
 const { updateFriendsPendingInvitations, updateFriends } = require('./update/friends');
 const { updateOnlineUsers } = require('./update/users');
 
-const newConnectionHandler = async (socket, io) => {
+const newConnectionHandler = async (socket) => {
     const userDetails = socket.user;
 
     serverStore.addNewConnectedUser({

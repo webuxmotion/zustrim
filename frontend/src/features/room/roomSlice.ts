@@ -1,6 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type RoomState = Record<string, any>;
+export interface Participant {
+  userId: string;
+  socketId: string;
+}
+
+export interface ActiveRoom {
+  roomCreator: Participant;
+  participants: Participant[];
+  roomId: string; // UUID string
+  creatorUsername: string;
+}
+
+export interface RoomDetails {
+  // define properties if you know the structure, else:
+  [key: string]: any;
+}
+
+export interface RoomState {
+  isUserInRoom: boolean;
+  isUserRoomCreator: boolean;
+  roomDetails: RoomDetails | null;
+  activeRooms: ActiveRoom[]; // Replace `any` with a specific type if you know it
+  localStream: MediaStream | null;
+  remoteStreams: MediaStream[];
+  audioOnly: boolean;
+  screenSharingStream: MediaStream | null;
+  isScreenSharingActive: boolean;
+}
 
 const initialState: RoomState = {
   isUserInRoom: false,
@@ -28,7 +55,7 @@ const roomSlice = createSlice({
       state.isUserInRoom = action.payload.isUserInRoom;
       state.isUserRoomCreator = action.payload.isUserRoomCreator;
     },
-    setRoomDetails(state, action: PayloadAction<any>) {
+    setRoomDetails(state, action: PayloadAction<{ roomId: string }>) {
       state.roomDetails = action.payload;
     },
     setActiveRooms(state, action: PayloadAction<any[]>) {
