@@ -19,7 +19,8 @@ const Wrapper = styled.div`
 
 function DashboardPage() {
   const navigate = useNavigate();
-  const { user, room } = useSelector((state: RootState) => state);
+  const user = useSelector((state: RootState) => state.user);
+  const room = useSelector((state: RootState) => state.room);
   const [checkAuth, { data, isLoading, isError, isSuccess }] = useLazyCheckAuthQuery();
 
   useEffect(() => {

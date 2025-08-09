@@ -2,6 +2,7 @@ const authSocket = require('./middleware/authSocket');
 const disconnectHanlder = require('./socketHandlers/disconnectHanlder');
 const newConnectionHandler = require('./socketHandlers/newConnectionHandler');
 const serverStore = require('./serverStore');
+const roomCreateHandler = require('./socketHandlers/roomCreateHandler');
 
 const registerSocketServer = (server) => {
     const io = require('socket.io')(server, {
@@ -22,6 +23,10 @@ const registerSocketServer = (server) => {
         console.log(socket.id);
 
         newConnectionHandler(socket, io);
+
+        socket.on('room-create', () => {
+            roomCreateHandler(socket);
+        });
 
         socket.on('disconnect', () => {
             disconnectHanlder(socket);
