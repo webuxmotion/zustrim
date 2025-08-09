@@ -21,7 +21,7 @@ function AppBar() {
 
     return (
         <MainContainer>
-            {`${user.username} ${user._id}`}
+            {`${user.username} ${user._id} ${window?.__SOCKET__?.id}`}
             <DropdownMenu />
         </MainContainer>
     )

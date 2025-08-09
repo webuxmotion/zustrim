@@ -55,7 +55,7 @@ export const connectSocket = (user) => {
     });
 
     socket.on('room-create', (data) => {
-      roomHandler.newRoomCreated(data);
+      roomHandler.newRoomCreated(data); 
     });
 
     socket.on('active-rooms', (data) => {
