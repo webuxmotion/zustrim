@@ -12,7 +12,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      process: 'process/browser.js',
+      process: 'process',
       buffer: 'buffer',
       events: 'events/',
       util: 'util/',

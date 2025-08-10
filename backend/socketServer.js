@@ -33,7 +33,11 @@ const registerSocketServer = (server) => {
 
         socket.on('room-leave', (data) => {
             roomLeaveHandler(socket, data);
-        })
+        });
+
+        socket.on('conn-init', (data) => {
+            console.log(data);
+        });
 
         socket.on('disconnect', () => {
             disconnectHanlder(socket);
