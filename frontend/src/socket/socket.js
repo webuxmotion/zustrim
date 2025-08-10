@@ -68,6 +68,12 @@ export const connectSocket = (user) => {
       webRTCHandler.prepareNewPeerConnection({ connUserSocketId, initiator: false });
       socket.emit('conn-init', { connUserSocketId });
     });
+
+    socket.on('conn-init', (data) => {
+      const  { connUserSocketId } = data;
+      webRTCHandler.prepareNewPeerConnection({ connUserSocketId, initiator: true });
+    });
+    
   } else {
     console.log('⚠️ Socket already connected');
   }
