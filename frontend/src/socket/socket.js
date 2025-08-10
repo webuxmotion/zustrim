@@ -73,6 +73,10 @@ export const connectSocket = (user) => {
       const  { connUserSocketId } = data;
       webRTCHandler.prepareNewPeerConnection({ connUserSocketId, initiator: true });
     });
+
+    socket.on('conn-signal', (data) => {
+      webRTCHandler.handleSignalingData(data);
+    });
     
   } else {
     console.log('⚠️ Socket already connected');
@@ -100,4 +104,8 @@ export const joinRoom = (data) => {
 
 export const leaveRoom = (data) => {
   socket.emit('room-leave', data);
+}
+
+export const signalPeerData = (data) => {
+  socket.emit('conn-signal', data);
 }

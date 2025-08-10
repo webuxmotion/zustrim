@@ -65,24 +65,26 @@ export const prepareNewPeerConnection = ({ connUserSocketId, initiator }) => {
             connUserSocketId,
         };
 
-        /* 
-            TODO: pass signaling data to other user
-        */
-
-        // socket.signalPeerData(signalData);
+        socket.signalPeerData(signalData);
     });
 
     peers[connUserSocketId].on('stream', (remoteStream) => {
-        /*
-            TODO: add new remote stream to our server store
-        */
-       
+        console.log('remote stream came', remoteStream);
     });
+}
+
+const handleSignalingData = (data) => {
+    const { connUserSocketId, signal } = data;
+
+    if (peers[connUserSocketId]) {
+        peers[connUserSocketId].signal(signal);
+    }
 }
 
 const webRTCHandler = {
     getLocalStreamPreview,
-    prepareNewPeerConnection
+    prepareNewPeerConnection,
+    handleSignalingData,
 }
 
 export default webRTCHandler;
