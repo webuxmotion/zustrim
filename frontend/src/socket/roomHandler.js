@@ -1,7 +1,7 @@
 import { store } from '@/app/store';
 import { setActiveRooms, setOpenRoom, setRoomDetails } from '@/features/room/roomSlice';
 import * as socket from './socket';
-import { getLocalStreamPreview } from './webRTCHandler';
+import webRTCHandler from './webRTCHandler';
 
 export const createNewRoom = () => {
     stopStreamTracks();
@@ -13,7 +13,7 @@ export const createNewRoom = () => {
 
     const audioOnly = store.getState().room.audioOnly;
 
-    getLocalStreamPreview(audioOnly, successCallbackFunc);
+    webRTCHandler.getLocalStreamPreview(audioOnly, successCallbackFunc);
 }
 
 export const newRoomCreated = (data) => {
@@ -48,7 +48,7 @@ export const joinRoom = (roomId) => {
 
     const audioOnly = store.getState().room.audioOnly;
 
-    getLocalStreamPreview(audioOnly, successCallbackFunc);
+    webRTCHandler.getLocalStreamPreview(audioOnly, successCallbackFunc);
 }
 
 export const leaveRoom = () => {

@@ -2,9 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite';
 
-// Відновлюємо __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -13,6 +12,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
+      process: 'process/browser.js',
+      buffer: 'buffer',
+      events: 'events/',
+      util: 'util/',
     },
+  },
+  optimizeDeps: {
+    include: ['events', 'util', 'buffer', 'process'],
   },
 });

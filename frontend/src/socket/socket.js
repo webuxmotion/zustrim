@@ -2,6 +2,7 @@ import { store } from '@/app/store';
 import { setFriends, setOnlineUsers, setPendingFriendsInvitations } from '@/features/dashboard/FriendsSidebar/friendsSlicer';
 import io from 'socket.io-client';
 import roomHandler from './roomHandler';
+import webRTCHandler from './webRTCHandler';
 
 
 const SOCKET_URL = import.meta.env.MODE === "development" ? "http://localhost:5002" : "https://zustrim.onrender.com";
@@ -55,11 +56,17 @@ export const connectSocket = (user) => {
     });
 
     socket.on('room-create', (data) => {
-      roomHandler.newRoomCreated(data); 
+      roomHandler.newRoomCreated(data);
     });
 
     socket.on('active-rooms', (data) => {
       roomHandler.updateActiveRooms(data);
+    });
+
+    socket.on('conn-prepare', (data) => {
+      const { connUserSocketId } = data;
+      webRTCHandler.prepareNewPeerConnection({ connUserSocketId, initiator: false });
+      socket.emit('conn-init', { connUserSocketId });
     });
   } else {
     console.log('⚠️ Socket already connected');
