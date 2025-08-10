@@ -6,11 +6,15 @@ import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { MoreVert } from '@mui/icons-material';
 import { disconnectSocket } from '@/socket/socket';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAudioOnly } from '@/features/room/roomSlice';
 
 export default function DropdownMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  const room = useSelector(state => state.room);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,6 +29,10 @@ export default function DropdownMenu() {
     localStorage.removeItem('token'); // remove JWT token
     navigate('/sign-in'); // redirect to sign-in or home
   };
+
+  const handleAudioOnlyChange = () => {
+    dispatch(setAudioOnly(!room.audioOnly));
+  }
 
   return (
     <div>
@@ -49,6 +57,7 @@ export default function DropdownMenu() {
           },
         }}
       >
+        <MenuItem onClick={handleAudioOnlyChange}>{room?.audioOnly ? 'Audio Only Enabled' : 'Audio Only Disabled'}</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>

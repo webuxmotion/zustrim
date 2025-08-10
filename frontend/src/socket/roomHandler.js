@@ -4,12 +4,16 @@ import * as socket from './socket';
 import { getLocalStreamPreview } from './webRTCHandler';
 
 export const createNewRoom = () => {
+    stopStreamTracks();
+
     const successCallbackFunc = () => {
         store.dispatch(setOpenRoom({ isUserRoomCreator: true, isUserInRoom: true }));
         socket.createNewRoom();
     }
 
-    getLocalStreamPreview(false, successCallbackFunc);
+    const audioOnly = store.getState().room.audioOnly;
+
+    getLocalStreamPreview(audioOnly, successCallbackFunc);
 }
 
 export const newRoomCreated = (data) => {
@@ -42,16 +46,30 @@ export const joinRoom = (roomId) => {
         socket.joinRoom({ roomId });
     }
 
-    getLocalStreamPreview(false, successCallbackFunc);
+    const audioOnly = store.getState().room.audioOnly;
+
+    getLocalStreamPreview(audioOnly, successCallbackFunc);
 }
 
 export const leaveRoom = () => {
     const room = store.getState().room;
     const roomId = room.roomDetails.roomId;
 
+    stopStreamTracks();
+
     socket.leaveRoom({ roomId });
     store.dispatch(setRoomDetails(null));
     store.dispatch(setOpenRoom({ isUserRoomCreator: false, isUserInRoom: false }));
+}
+
+function stopStreamTracks() {
+    const localStream = store.getState().room.localStream;
+
+    if (localStream) {
+        localStream.getTracks().forEach(track => {
+            track.stop();
+        });
+    }
 }
 
 
