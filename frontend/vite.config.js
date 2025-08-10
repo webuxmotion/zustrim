@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -12,10 +13,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      process: 'process',
-      buffer: 'buffer',
-      events: 'events',
-      util: 'util',
     },
   },
   optimizeDeps: {
@@ -24,7 +21,9 @@ export default defineConfig({
   build: {
     sourcemap: true,
     rollupOptions: {
-      external: [],
+      plugins: [
+        nodePolyfills()
+      ]
     },
   },
 });
