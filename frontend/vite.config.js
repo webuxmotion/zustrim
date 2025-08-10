@@ -14,8 +14,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
       process: 'process',
       buffer: 'buffer',
-      events: 'events/',
-      util: 'util/',
+      events: 'events',
+      util: 'util',
     },
   },
   optimizeDeps: {

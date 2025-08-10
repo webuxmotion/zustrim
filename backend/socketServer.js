@@ -1,10 +1,11 @@
 const authSocket = require('./middleware/authSocket');
+const serverStore = require('./serverStore');
 const disconnectHanlder = require('./socketHandlers/disconnectHanlder');
 const newConnectionHandler = require('./socketHandlers/newConnectionHandler');
-const serverStore = require('./serverStore');
 const roomCreateHandler = require('./socketHandlers/roomCreateHandler');
 const roomJoinHandler = require('./socketHandlers/roomJoinHandler');
 const roomLeaveHandler = require('./socketHandlers/roomLeaveHandler');
+const roomInitializeConnectionHandler = require('./socketHandlers/roomInitializeConnectionHandler');
 
 const registerSocketServer = (server) => {
     const io = require('socket.io')(server, {
@@ -36,7 +37,7 @@ const registerSocketServer = (server) => {
         });
 
         socket.on('conn-init', (data) => {
-            console.log(data);
+            roomInitializeConnectionHandler(socket, data);
         });
 
         socket.on('disconnect', () => {
