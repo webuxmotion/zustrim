@@ -16,11 +16,10 @@ export default defineConfig({
       buffer: 'buffer',
       events: 'events',
       util: 'util',
-      stream: 'stream-browserify',
     },
   },
   optimizeDeps: {
-    include: ['events', 'util', 'buffer', 'process', 'stream'],
+    include: ['events', 'util', 'buffer', 'process'],
   },
   build: {
     sourcemap: true,
