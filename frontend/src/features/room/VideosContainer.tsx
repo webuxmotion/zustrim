@@ -17,6 +17,9 @@ function VideosContainer() {
   return (
     <MainContainer>
       {room.localStream && <Video stream={room.localStream} isLocalStream={true} />}
+      {room.remoteStreams && room.remoteStreams.map(stream => (
+        <Video key={stream.id} stream={stream} />
+      ))}
     </MainContainer>
   )
 }

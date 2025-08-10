@@ -1,5 +1,5 @@
 import { store } from "@/app/store";
-import { setLocalStream } from "@/features/room/roomSlice";
+import { setLocalStream, setRemoteStreams } from "@/features/room/roomSlice";
 import * as socket from './socket';
 import Peer from 'simple-peer';
 
@@ -47,12 +47,6 @@ let peers = {};
 export const prepareNewPeerConnection = ({ connUserSocketId, initiator }) => {
     const localStream = store.getState().room.localStream;
 
-    if (initiator) {
-        console.log('preparing new peer connection as initiator');
-    } else {
-        console.log('preparing new peer connection as NOT initiator');
-    }
-
     peers[connUserSocketId] = new Peer({
         initiator,
         config: getConfiguration(),
@@ -69,7 +63,8 @@ export const prepareNewPeerConnection = ({ connUserSocketId, initiator }) => {
     });
 
     peers[connUserSocketId].on('stream', (remoteStream) => {
-        console.log('remote stream came', remoteStream);
+        remoteStream.connUserSocketId = connUserSocketId;
+        addNewRemoteStream(remoteStream);
     });
 }
 
@@ -79,6 +74,13 @@ const handleSignalingData = (data) => {
     if (peers[connUserSocketId]) {
         peers[connUserSocketId].signal(signal);
     }
+}
+
+function addNewRemoteStream(remoteStream) {
+    const remoteStreams = store.getState().room.remoteStreams;
+    const newRemoteStreams = [...remoteStreams, remoteStream];
+
+    store.dispatch(setRemoteStreams(newRemoteStreams));
 }
 
 const webRTCHandler = {

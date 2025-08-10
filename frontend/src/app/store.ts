@@ -16,9 +16,11 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [
           'room/setLocalStream',
+          'room/setRemoteStreams'
         ],
         ignoredPaths: [
-          'room.localStream'
+          'room.localStream',
+          'room.remoteStreams'
         ],
       },
     }).concat(baseApi.middleware),
