@@ -12,14 +12,15 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      process: 'process/browser',
+      process: 'process',
       buffer: 'buffer',
       events: 'events',
       util: 'util',
+      stream: 'stream-browserify',
     },
   },
   optimizeDeps: {
-    include: ['events', 'util', 'buffer', 'process'],
+    include: ['events', 'util', 'buffer', 'process', 'stream'],
   },
   build: {
     sourcemap: true,
