@@ -83,10 +83,38 @@ function addNewRemoteStream(remoteStream) {
     store.dispatch(setRemoteStreams(newRemoteStreams));
 }
 
+const closeAllConnections = () => {
+    Object.entries(peers).forEach(mappedObject => {
+        const connUserSocketId = mappedObject[0];
+
+        if (peers[connUserSocketId]) {
+            peers[connUserSocketId].destroy();
+            delete peers[connUserSocketId];
+        }
+    });
+}
+
+const handleParticipantLeftRoom = (data) => {
+    const { connUserSocketId } = data;
+
+    if (peers[connUserSocketId]) {
+        peers[connUserSocketId].destroy();
+        delete peers[connUserSocketId];
+    }
+
+    const remoteStreams = store.getState().room.remoteStreams;
+
+    const newRemoteStreams = remoteStreams.filter(remoteStream => remoteStream.connUserSocketId !== connUserSocketId);
+
+    store.dispatch(setRemoteStreams(newRemoteStreams));
+}
+
 const webRTCHandler = {
     getLocalStreamPreview,
     prepareNewPeerConnection,
     handleSignalingData,
+    closeAllConnections,
+    handleParticipantLeftRoom,
 }
 
 export default webRTCHandler;

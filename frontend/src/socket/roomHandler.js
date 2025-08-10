@@ -1,5 +1,5 @@
 import { store } from '@/app/store';
-import { setActiveRooms, setOpenRoom, setRoomDetails } from '@/features/room/roomSlice';
+import { setActiveRooms, setOpenRoom, setRemoteStreams, setRoomDetails } from '@/features/room/roomSlice';
 import * as socket from './socket';
 import webRTCHandler from './webRTCHandler';
 
@@ -56,6 +56,9 @@ export const leaveRoom = () => {
     const roomId = room.roomDetails.roomId;
 
     stopStreamTracks();
+
+    store.dispatch(setRemoteStreams([]));
+    webRTCHandler.closeAllConnections();
 
     socket.leaveRoom({ roomId });
     store.dispatch(setRoomDetails(null));
